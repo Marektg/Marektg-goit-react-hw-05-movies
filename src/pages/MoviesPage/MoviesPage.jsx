@@ -4,12 +4,14 @@ import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import apiMovies from 'api/movies';
+import Loader from 'components/Loader/Loader';
 
 const MoviesPage = () => {
     const params = useParams();
     const [queryValue, setQueryValue] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
     const [moviesByQuery, setMoviesByQuery] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     const queryChangeHandler = (e) => {
         setQueryValue(e.target.value);
@@ -33,10 +35,12 @@ const MoviesPage = () => {
             if (query) {
                 const moviesList = await apiMovies.getMoviesByQuery(query);
                 setMoviesByQuery(moviesList);
+                setIsLoading(true)
             }
         } catch (error) {
             console.log(error);
         }
+        setIsLoading(false)
     }, [searchParams]);
 
     useEffect(() => {
@@ -45,6 +49,7 @@ const MoviesPage = () => {
 
     return (
         <>
+            {isLoading && <Loader />}
             {!params.movieId && (
                 <>
                     <MoviesSearchbar

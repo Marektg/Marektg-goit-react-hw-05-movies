@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { Img } from "./ImageWithCheck.styled";
+import { Img } from "./ImageWithCheck.styled";
 import imgNotFound from "../../images/imgNotFound.png"
 import PropTypes from 'prop-types';
 

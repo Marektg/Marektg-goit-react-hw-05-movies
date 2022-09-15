@@ -1,6 +1,6 @@
 import React from 'react';
 import CastItem from './CastItem';
-// import { Cast } from './CastList.styled';
+import { Cast } from './CastList.styled';
 import PropTypes from 'prop-types';
 
 const CastList = ({ casts }) => {

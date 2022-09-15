@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageWithCheck from '../ImageWithCheck/ImageWithCheck';
-// import { Item } from './CastItem.styled';
+import { Item } from './CastItem.styled';
 import PropTypes from 'prop-types';
 
 const CastItem = ({ cast }) => {

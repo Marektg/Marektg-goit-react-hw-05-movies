@@ -2,23 +2,24 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
-import App from 'components/App/App';
+// import App from 'components/App/App';
 import Loader from 'components/Loader/Loader';
+import SharedLayout from 'components/SharedLayout/SharedLayout';
 
 
-const HomePage = React.lazy(() => import("./pages/Homepage/HomePage"));
-const MoviesPage = React.lazy(() => import("./pages/MoviesPage/MoviesPage"));
-const MovieDetailsPage = React.lazy(() => import("./pages/MoviesDetailsPage/MovieDetailsPage"));
-const Cast = React.lazy(() => import("./pages/Cast/Cast"));
+const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
+const MoviesPage = React.lazy(() => import('./pages/MoviesPage/MoviesPage'));
+const MovieDetailsPage = React.lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage'));
+const Cast = React.lazy(() => import('./pages/Cast/Cast'));
 const Reviews = React.lazy(() => import("./pages/Reviews/Reviews"));
-// const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
+const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<App />}>
+          <Route path="/" element={<SharedLayout />}>
             <Route index element={<HomePage />} />
             <Route path="movies" element={<MoviesPage />}>
               <Route path=":movieId" element={<MovieDetailsPage />}>
@@ -27,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               </Route>
             </Route>
           </Route>
-          <Route path="*" element={<HomePage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
