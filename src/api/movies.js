@@ -32,7 +32,7 @@ export const getMoviesCast = async (movieId) => {
 
 
     try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?${apiKey}`);
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -43,8 +43,9 @@ export const getMoviesById = async (movieId) => {
 
 
     try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?${apiKey}`);
-        return response.data;
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`);
+        const result = await response.data;
+        return result;
     } catch (error) {
         console.log(error);
     }
@@ -54,7 +55,7 @@ export const getMoviesReviews = async (movieId) => {
 
 
     try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?${apiKey}`);
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${apiKey}`);
         return response.data;
     } catch (error) {
         console.log(error);

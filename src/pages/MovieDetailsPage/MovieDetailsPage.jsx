@@ -11,7 +11,8 @@ const MovieDetailsPage = () => {
     const { movieId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const { movie } = apiMovies.getMoviesById(movieId);
+    const movie = apiMovies.getMoviesById(movieId);
+    console.log(movie)
 
     const backLink =
         `${location.state?.from?.pathname}${location.state?.from?.search}` ??
