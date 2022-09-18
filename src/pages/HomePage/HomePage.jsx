@@ -1,36 +1,34 @@
-import MoviesList from 'components/Movies/MoviesList';
-import React, { useEffect, useState } from 'react';
-import apiMovies from 'api/movies';
-import { TrendiesSection } from './HomePage.styled';
-import Loader from 'components/Loader/Loader';
+import styles from './HomePage.module.scss';
+import React, { useState, useEffect } from 'react';
+import MovieList from '../../components/Movies/MoviesList';
+import { fetchTrendyMovies } from '../../service/movieApi';
 
 const HomePage = () => {
-    const [trendyMovies, setTrendyMovies] = useState([]);
-    const [isLoading, setIsLoading] =useState(false)
+    const { container, heading } = styles;
 
-    const getMovies = async () => {
-        try {
-            const moviesList = await apiMovies.getTrendyMovies();
-            setIsLoading(true)
-            setTrendyMovies(moviesList);
-        } catch (error) {
-            console.log(error);
-        };
-        setIsLoading(false);
+    const [movies, setMovies] = useState([]);
+
+    const getTrendyMovies = () => {
+        return fetchTrendyMovies()
+            .then(response => {
+                const trendyMovies = response.results;
+                return setMovies(trendyMovies);
+            })
+
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     useEffect(() => {
-        getMovies();
+        getTrendyMovies();
     }, []);
 
     return (
-        <TrendiesSection>
-            {isLoading && <Loader />}
-            <div>
-                <h2>Trending today</h2>
-            </div>
-            <MoviesList movies={trendyMovies} />
-        </TrendiesSection>
+        <main className={container}>
+            <h1 className={heading}>Trending today</h1>
+            <MovieList movies={movies} />
+        </main>
     );
 };
 

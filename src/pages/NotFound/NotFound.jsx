@@ -1,6 +1,7 @@
-import { Bold, HomeLink, Main } from "./NotFound.styled";
+import styles from "./NotFound.module.scss";
 
 const NotFound = () => {
+    const { Bold, HomeLink, Main } = styles;
     return (
         <Main>
             <Bold>404</Bold>

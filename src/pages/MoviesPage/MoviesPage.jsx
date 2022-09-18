@@ -1,63 +1,73 @@
-import MoviesList from 'components/Movies/MoviesList';
-import MoviesSearchbar from '../../components/Movies/MoviesSearchbar';
-import React, { useCallback, useEffect } from 'react';
-import { useState } from 'react';
+import styles from './MoviesPage.module.scss';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
-import apiMovies from 'api/movies';
-import Loader from 'components/Loader/Loader';
+import { fetchMovieByQuery} from '../../service/movieApi';
+import MovieList from '../../components/Movies/MoviesList';
+import SearchBar from '../../components/Movies/SearchBar';
+import Notiflix from 'notiflix';
+import 'notiflix/dist/notiflix-3.2.5.min.css';
+// import PropTypes from 'prop-types';
 
 const MoviesPage = () => {
     const params = useParams();
-    const [queryValue, setQueryValue] = useState('');
+    const [query, setQuery] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
     const [moviesByQuery, setMoviesByQuery] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+  
 
     const queryChangeHandler = (e) => {
-        setQueryValue(e.target.value);
+        setQuery(e.target.value);
     };
 
     const querySubmitHandler = (e) => {
         e.preventDefault();
 
-        if (!queryValue) {
-            alert("Complete the search field!");
+        if (!query) {
+            Notiflix.Notify.failure("Enter the search value!");
         }
 
-        queryValue ? setSearchParams({ query: queryValue }) : setSearchParams('');
+        query ? setSearchParams({ query: query }) : setSearchParams('');
 
-        setQueryValue('');
+        setQuery('');
     };
 
-    const getWantedMovies = useCallback(async () => {
+    const getWantedMovies =  useCallback(async () => {
         try {
             const query = searchParams.get('query');
             if (query) {
-                const moviesList = await apiMovies.getMoviesByQuery(query);
-                setMoviesByQuery(moviesList);
-                setIsLoading(true)
+                const moviesList = await fetchMovieByQuery(query);
+                setMoviesByQuery(moviesList.results);
+          
             }
         } catch (error) {
             console.log(error);
         }
-        setIsLoading(false)
+   
     }, [searchParams]);
+    
+
+    
 
     useEffect(() => {
         getWantedMovies();
     }, [getWantedMovies]);
 
+    const {  container } = styles;
     return (
         <>
-            {isLoading && <Loader />}
+          
             {!params.movieId && (
                 <>
-                    <MoviesSearchbar
-                        value={queryValue}
+               
+                    <SearchBar
+                        value={query}
                         submitHandler={querySubmitHandler}
                         changeHandler={queryChangeHandler}
-                    />
-                    <MoviesList movies={moviesByQuery} />
+                        />
+                  
+                    <div className={container}>
+                        <MovieList movies={moviesByQuery} />
+                    </div>
                 </>
             )}
             {params.movieId && (
@@ -70,3 +80,61 @@ const MoviesPage = () => {
 };
 
 export default MoviesPage;
+
+
+// const MoviesPage = () => {
+//     const { container } = styles;
+//     const [query, setQuery] = useState('');
+//     const [movies, setMovies] = useState([]);
+//     const [errorMessage, setErrorMessage] = useState();
+
+//     const setInitialParams = (query) => {
+//         if (query === "") {
+//             Notiflix.Notify.failure("Enter the search value!");
+//             return;
+//         }
+
+//         if (query === query) {
+//             return;
+//         }
+
+//         setQuery(query);
+//     }
+
+//     const addMovies = useCallback(async () => {
+//         try {
+//             if (!query) {
+//                 return;
+//             }
+
+//             const movies = await fetchMovieByQuery(query);
+//             const { resoult: newResoult } = movies;
+//             setMovies(oldMovies => newResoult)
+//             console.log(movies);
+//             return movies
+           
+           
+//         } catch (err) {
+//             setErrorMessage(err);
+//         }
+//     }, [query]
+//     );
+//     useEffect(() => {
+//         addMovies();
+//         console.log(movies);
+//     }, [addMovies]);
+//     return (
+//         <main className={container}>
+//             <SearchBar onSubmit={setInitialParams} />
+//             {errorMessage && <div>{errorMessage}</div>}
+//             <MovieList movies={movies} />
+//             <Outlet />
+//         </main>
+//     );
+// };
+
+// // MoviesPage.propTypes = {
+
+// // };
+
+// export default MoviesPage;

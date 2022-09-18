@@ -1,0 +1,16 @@
+ Main {
+  text-align: center;
+}
+
+ Bold {
+  font-size: 64px;
+}
+
+ HomeLink {
+  text-decoration: none;
+  color: #157FE9;
+  &:hover,
+  &:focus {
+    color: #D5428C;
+  }
+}

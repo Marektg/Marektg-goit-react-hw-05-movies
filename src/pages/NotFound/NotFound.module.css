@@ -1,0 +1,15 @@
+Main {
+  text-align: center;
+}
+
+Bold {
+  font-size: 64px;
+}
+
+HomeLink {
+  text-decoration: none;
+  color: #157FE9;
+}
+HomeLink:hover, HomeLink:focus {
+  color: #D5428C;
+}/*# sourceMappingURL=NotFound.module.css.map */

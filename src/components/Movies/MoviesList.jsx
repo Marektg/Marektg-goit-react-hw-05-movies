@@ -1,35 +1,37 @@
-import ImageWithCheck from 'components/ImageWithCheck/ImageWithCheck';
-import React from 'react'
+import styles from './MovieList.module.scss';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ImgWrapper, List } from './MoviesList.styled';
 import PropTypes from 'prop-types';
 
-const MoviesList = ({ movies }) => {
-    let location = useLocation();
-
+const MovieList = ({ movies }) => {
+    const { movie__item, movie__list, link } = styles;
+    const location = useLocation();
+    console.log(location.search);
     return (
-        <List>
+        <ul className={movie__list}>
             {movies.map(movie => (
-                <li key={movie.id}>
-                    <Link
-                        to={`/movies/${movie.id}`}
-                        state={{
-                            from: location,
-                        }}
-                    >
-                        <ImgWrapper>
-                            <ImageWithCheck src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} check={movie.poster_path} />
-                        </ImgWrapper>
+
+                <li className={movie__item} key={movie.id}>
+                    <Link className={link} to={`/movies/${movie.id}`} state={{ from: location }}>
+                        {movie.poster_path ? (
+                            <img src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} alt={movie.title}
+                            />
+                        ) : (
+                            // eslint-disable-next-line jsx-a11y/img-redundant-alt
+                            <img src={`../../images/noImage.png`} alt={`There is no image`} />
+
+                        )}
+
                         <p>{movie.title}</p>
                     </Link>
                 </li>
             ))}
-        </List>
-    )
-}
-
-MoviesList.propTypes = {
-    movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+        </ul>
+    );
 };
 
-export default MoviesList
+MovieList.propTypes = {
+    movies: PropTypes.array,
+};
+
+export default MovieList;
