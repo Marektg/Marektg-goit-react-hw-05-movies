@@ -1,15 +1,15 @@
-Main {
+.main {
   text-align: center;
 }
 
-Bold {
+.bold {
   font-size: 64px;
 }
 
-HomeLink {
+.home {
   text-decoration: none;
   color: #157FE9;
 }
-HomeLink:hover, HomeLink:focus {
+.home:hover, .home:focus {
   color: #D5428C;
 }/*# sourceMappingURL=NotFound.module.css.map */

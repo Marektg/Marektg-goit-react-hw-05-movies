@@ -1,14 +1,15 @@
 import styles from "./NotFound.module.scss";
+import { Link } from "react-router-dom";
 
 const NotFound = () => {
-    const { Bold, HomeLink, Main } = styles;
+    const { bold, home, main } = styles;
     return (
-        <Main>
-            <Bold>404</Bold>
+        <div className={main}>
+            <p className={bold}>404</p>
             <p>Sorry, we couldn't find that page :(</p>
-            <p>If you want, you can go back to the <HomeLink to="/">main page</HomeLink>.
+            <p>If you want, you can go back to the <Link className={home} to="/">main page</Link>.
             </p>
-        </Main>
+        </div>
     );
 };
 

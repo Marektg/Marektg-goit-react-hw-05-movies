@@ -1,12 +1,12 @@
- Main {
+ .main {
   text-align: center;
 }
 
- Bold {
+ .bold {
   font-size: 64px;
 }
 
- HomeLink {
+ .home {
   text-decoration: none;
   color: #157FE9;
   &:hover,
